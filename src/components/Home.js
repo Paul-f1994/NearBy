@@ -98,8 +98,7 @@ export class Home extends React.Component {
   }
 
   render() {
-    const operations = <CreatePostButton />;;
-
+    const operations = <CreatePostButton />;
     return (
         <div className="main-tabs">
           <Tabs tabBarExtraContent={operations}>
