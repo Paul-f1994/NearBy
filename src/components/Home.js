@@ -98,10 +98,10 @@ export class Home extends React.Component {
   }
 
   render() {
-    const operations = <CreatePostButton />;
+    const createPostButton = <CreatePostButton loadNearByPosts={this.loadNearByPosts}/>;
     return (
         <div className="main-tabs">
-          <Tabs tabBarExtraContent={operations}>
+          <Tabs tabBarExtraContent={createPostButton}>
             <TabPane tab="Posts" key="1">
               {this.getGalleryPanelContent()}
             </TabPane>
