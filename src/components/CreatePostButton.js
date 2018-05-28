@@ -1,19 +1,18 @@
 import React from 'react';
-import {Modal, Button} from 'antd';
-import {WrappedCreatePostForm} from './CreatePostForm'
 import $ from 'jquery';
-import {message} from 'antd/lib/index'
-import {API_ROOT, POS_KEY, TOKEN_KEY,AUTH_PREFIX} from '../constants'
+import { Modal, Button, message } from 'antd';
+import { WrappedCreatePostForm } from './CreatePostForm';
+import { API_ROOT, POS_KEY, AUTH_PREFIX, TOKEN_KEY, LOC_SHAKE } from '../constants';
 
 export class CreatePostButton extends React.Component {
   state = {
-    ModalText: 'Content of the modal',
     visible: false,
-    confirmLoading: false
+    confirmLoading: false,
   }
   showModal = () => {
-    this.setState({visible: true});
-
+    this.setState({
+      visible: true,
+    });
   }
   handleOk = () => {
     this.setState({ confirmLoading: true });
@@ -21,8 +20,8 @@ export class CreatePostButton extends React.Component {
       if (!err) {
         const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
         const formData = new FormData();
-        formData.set('lat', lat);
-        formData.set('lon', lon);
+        formData.set('lat', lat + Math.random() * LOC_SHAKE * 2 - LOC_SHAKE);
+        formData.set('lon', lon + Math.random() * LOC_SHAKE * 2 - LOC_SHAKE);
         formData.set('message', values.message);
         formData.set('image', values.image[0].originFileObj);
 
@@ -50,20 +49,17 @@ export class CreatePostButton extends React.Component {
       }
     });
   }
-
   handleCancel = () => {
     console.log('Clicked cancel button');
     this.setState({
-      visible: false
+      visible: false,
     });
   }
   saveFormRef = (form) => {
     this.form = form;
   }
-
-
   render() {
-    const {visible, confirmLoading, ModalText} = this.state;
+    const { visible, confirmLoading } = this.state;
     return (
         <div>
           <Button type="primary" onClick={this.showModal}>Create New Post</Button>
@@ -73,7 +69,6 @@ export class CreatePostButton extends React.Component {
                  okText="Create"
                  confirmLoading={confirmLoading}
                  onCancel={this.handleCancel}
-                 cancelText="Cancel"
           >
             <WrappedCreatePostForm ref={this.saveFormRef}/>
           </Modal>
